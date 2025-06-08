@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascnd - Fashion Brand</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarina:wght@400&display=swap');
+        
+        .font-sarina {
+            font-family: 'Sarina', cursive;
+        }
+        
+        .font-baloo {
+            font-family: 'Baloo 2', cursive;
+        }
+        
+        .text-stroke {
+            -webkit-text-stroke: 1px #000000;
+        }
+        
+        .bg-gradient-dark {
+            background: linear-gradient(180deg, rgba(28,29,26,1) 0%, rgba(15,16,13,1) 100%);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Ensure body and html can scroll */
+        html, body {
+            height: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sarina': ['Sarina', 'cursive'],
+                        'baloo': ['Baloo 2', 'cursive'],
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Button Component
+        const Button = ({ children, className = "", variant = "default", ...props }) => {
+            const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
+            const variants = {
+                default: "bg-primary text-primary-foreground hover:bg-primary/90",
+                ghost: "hover:bg-accent hover:text-accent-foreground"
+            };
+            
+            return (
+                <button 
+                    className={`${baseClasses} ${variants[variant]} ${className}`}
+                    {...props}
+                >
+                    {children}
+                </button>
+            );
+        };
+
+        // Card Components
+        const Card = ({ children, className = "", ...props }) => (
+            <div className={`rounded-lg border bg-card text-card-foreground shadow-sm ${className}`} {...props}>
+                {children}
+            </div>
+        );
+
+        const CardContent = ({ children, className = "", ...props }) => (
+            <div className={`p-6 pt-0 ${className}`} {...props}>
+                {children}
+            </div>
+        );
+
+        // Separator Component
+        const Separator = ({ className = "", ...props }) => (
+            <div className={`shrink-0 bg-border h-[1px] w-full ${className}`} {...props} />
+        );
+
+        // Main App Component
+        const App = () => {
+            // Data for footer categories
+            const footerCategories = [
+                {
+                    title: "Categories",
+                    items: [
+                        "Sleeve less tshirts",
+                        "Jewelry",
+                        "Sports",
+                        "Electronics",
+                        "Indoor",
+                    ],
+                },
+                {
+                    title: "Shopping",
+                    items: ["Payments", "Delivery options", "Buyer protection"],
+                },
+                {
+                    title: "Customer care",
+                    items: [
+                        "Help center",
+                        "Terms & Conditions",
+                        "Privacy policy",
+                        "Returns & refund",
+                        "Survey & feedback",
+                    ],
+                },
+                {
+                    title: "Pages",
+                    items: ["About Us", "Shop", "Contact Us", "Services", "Blog"],
+                },
+            ];
+
+            // Data for product sections
+            const productSections = [
+                { title: "Yoga wear", className: "top-[1832px] left-[646px]" },
+                { title: "Cycling T-shirts", className: "top-[2102px] left-[55px]" },
+                { title: "Running wear", className: "top-[2979px] left-[55px]" },
+            ];
+
+            // Data for social media icons (using placeholder icons)
+            const socialIcons = [
+                { name: "Facebook", icon: "📘" },
+                { name: "Twitter", icon: "🐦" },
+                { name: "Instagram", icon: "📷" },
+                { name: "LinkedIn", icon: "💼" },
+            ];
+
+            return (
+                <div className="bg-white flex flex-row justify-center w-full min-h-screen">
+                    <div className="bg-white w-[1280px] relative" style={{ height: 'auto', minHeight: '7000px' }}>
+                        {/* Product section titles */}
+                        {productSections.map((section, index) => (
+                            <div
+                                key={index}
+                                className={`absolute w-[1002px] font-inter font-medium text-black text-[26px] tracking-[0] leading-[normal] ${section.className}`}
+                            >
+                                {section.title}
+                            </div>
+                        ))}
+    
+                        {/* Links */}
+                        <div className="absolute w-[623px] top-[3314px] left-[61px] font-inter font-normal text-black text-2xl tracking-[0] leading-[normal] underline">
+                            More about us
+                        </div>
+
+                        <div className="absolute w-[230px] top-[4913px] left-[1011px] font-inter font-normal text-black text-2xl tracking-[0] leading-[normal] underline">
+                            View All collections
+                        </div>
+
+                        <div className="absolute w-[230px] top-[5135px] left-11 font-inter font-normal text-black text-2xl tracking-[0] leading-[normal]">
+                            Latest Updates
+                        </div>
+
+                        <div className="absolute w-[230px] top-[6171px] left-[54px] font-inter font-normal text-black text-2xl tracking-[0] leading-[normal]">
+                            Women Wear
+                        </div>
+
+                        <div className="absolute w-[318px] top-[5964px] left-[697px] font-inter font-normal text-black text-2xl tracking-[0] leading-[normal]">
+                            Customizeable Jersey
+                        </div>
+
+                        {/* Main headings */}
+                        <div className="absolute w-[623px] top-[989px] left-[608px] font-inter font-semibold text-black text-4xl tracking-[0] leading-[normal]">
+                            We create elegant and engaging designs for both online and offline
+                        </div>
+
+                        <div className="absolute top-[989px] left-[75px] font-sarina font-normal text-black text-5xl tracking-[0] leading-[normal]">
+                            ascnd
+                        </div>
+
+                        {/* Placeholder Images */}
+                        <div className="absolute w-[594px] h-[562px] top-[1254px] left-[637px] bg-gray-300 flex items-center justify-center text-gray-600 rounded-lg">
+                            <div className="text-center">
+                                <div className="text-xl font-semibold mb-2">Fashion Image 1</div>
+                                <div className="text-sm">594x562px</div>
+                            </div>
+                        </div>
+
+                        <div className="absolute w-[1177px] h-[777px] top-[2178px] left-[49px] bg-gray-300 flex items-center justify-center text-gray-600 rounded-lg">
+                            <div className="text-center">
+                                <div className="text-2xl font-semibold mb-2">Large Fashion Banner</div>
+                                <div className="text-sm">1177x777px</div>
+                            </div>
+                        </div>
+
+                        <div className="absolute w-[831px] top-[3179px] left-[49px] font-inter font-semibold text-black text-5xl tracking-[0] leading-[normal]">
+                            We create elegant and engaging designs for both online and offline
+                        </div>
+
+                        {/* Hero section */}
+                        <div className="absolute w-[1332px] h-[878px] top-0 -left-9">
+                            <div className="left-[286px] absolute w-[780px] h-[878px] top-0 bg-gray-400 flex items-center justify-center text-white text-2xl rounded-lg">
+                                <div className="text-center">
+                                    <div className="text-3xl font-bold mb-2">Hero Image</div>
+                                    <div className="text-lg">780x878px</div>
+                                </div>
+                            </div>
+
+                            <div className="w-[302px] h-[878px] left-0 bg-[#0f100e] absolute top-0" />
+
+                            <div className="w-[266px] h-[878px] left-[1066px] bg-gradient-dark absolute top-0" />
+                        </div>
+
+                        {/* Product images grid */}
+                        <div className="absolute top-[3459px] left-11 grid grid-cols-2 gap-[38px]">
+                            {[1, 2, 3, 4].map((num) => (
+                                <div
+                                    key={num}
+                                    className="w-[596px] h-[700px] bg-gray-300 flex items-center justify-center text-gray-600 text-xl rounded-lg"
+                                >
+                                    <div className="text-center">
+                                        <div className="text-2xl font-semibold mb-2">Product Image {num}</div>
+                                        <div className="text-sm">596x700px</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        {/* Video Section */}
+<div className="absolute top-[870px] left-[75px] w-[1130px] h-[400px] rounded-xl overflow-hidden shadow-lg">
+
+
+
+                        {/* Footer */}
+                        <footer className="absolute w-[1280px] h-[773px] top-[6249px] left-0">
+                            <div className="w-[1280px] h-[669px] left-0 bg-black absolute top-0" />
+
+                            <div className="top-[398px] left-36 text-[300px] absolute font-sarina font-normal text-white tracking-[0] leading-[normal]">
+                                ascnd
+                            </div>
+
+                            <div className="flex items-start gap-[218px] absolute top-[179px] left-[90px]">
+                                {footerCategories.map((category, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex flex-col items-start justify-center"
+                                    >
+                                        <div className="relative w-fit mt-[-1.00px] font-baloo font-bold text-white text-base tracking-[0] leading-[26px] whitespace-nowrap">
+                                            {category.title}
+                                        </div>
+                                        {category.items.map((item, itemIndex) => (
+                                            <div
+                                                key={itemIndex}
+                                                className="relative w-fit font-baloo font-medium text-white text-base tracking-[0] leading-[normal]"
+                                            >
+                                                {item}
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+
+                            <Separator className="absolute w-[509px] h-px top-[122px] left-[90px] bg-white" />
+
+                            <div className="absolute top-[87px] left-[92px] opacity-[0.34] font-inter font-normal text-white text-xl tracking-[0] leading-[normal] whitespace-nowrap">
+                                Enter email address
+                            </div>
+
+                            <Button
+                                variant="ghost"
+                                className="absolute top-[90px] left-[515px] opacity-80 font-inter font-normal text-white text-xl tracking-[0] leading-[normal] whitespace-nowrap p-0 hover:bg-white/10"
+                            >
+                                Submit
+                            </Button>
+
+                            <div className="absolute top-6 left-[92px] font-inter font-normal text-white text-xl tracking-[0] leading-[normal] whitespace-nowrap">
+                                Contact Us
+                            </div>
+
+                            <div className="flex items-start gap-[18px] absolute top-[391px] left-[90px]">
+                                {socialIcons.map((icon, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative w-6 h-6 text-white text-xl cursor-pointer hover:scale-110 transition-transform"
+                                        title={icon.name}
+                                    >
+                                        {icon.icon}
+                                    </div>
+                                ))}
+                            </div>
+                        </footer>
+
+                        {/* Coming soon sections */}
+                        <Card className="absolute w-[510px] h-[745px] top-[5204px] left-[690px] bg-gray-500 rounded-lg border-0">
+                            <CardContent className="p-0 relative h-full">
+                                <div className="absolute w-[230px] top-[19px] left-4 text-stroke font-inter font-normal text-white text-2xl tracking-[0] leading-[normal]">
+                                    Coming soon
+                                </div>
+                                <div className="absolute inset-0 flex items-center justify-center text-white text-xl">
+                                    <div className="text-center">
+                                        <div className="text-2xl font-semibold mb-2">Fashion Collection Preview</div>
+                                        <div className="text-sm">510x745px</div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <Card className="absolute w-[634px] h-[951px] top-[5204px] left-11 bg-gray-600 rounded-lg border-0">
+                            <CardContent className="p-0 relative h-full">
+                                <div className="absolute w-[230px] top-[33px] left-[22px] text-stroke font-inter font-normal text-white text-2xl tracking-[0] leading-[normal]">
+                                    Coming soon
+                                </div>
+                                <div className="absolute inset-0 flex items-center justify-center text-white text-xl">
+                                    <div className="text-center">
+                                        <div className="text-2xl font-semibold mb-2">New Collection Preview</div>
+                                        <div className="text-sm">634x951px</div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <div className="absolute w-[556px] h-[834px] top-[1254px] left-[49px] bg-gray-400 flex items-center justify-center text-white text-xl rounded-lg">
+                            <div className="text-center">
+                                <div className="text-2xl font-semibold mb-2">Side Fashion Image</div>
+                                <div className="text-sm">556x834px</div>
+                            </div>
+                        </div>
+
+                        {/* Navigation */}
+                        <div className="fixed w-full h-[86px] top-0 left-0 z-50 bg-black/20 backdrop-blur-sm">
+                            <div className="max-w-[1280px] mx-auto relative">
+                                <div className="top-[25px] left-[59px] text-5xl absolute font-sarina font-normal text-white tracking-[0] leading-[normal]">
+                                    ascnd
+                                </div>
+
+                                <Button
+                                    variant="ghost"
+                                    className="absolute w-[55px] h-[55px] top-[23px] right-[59px] p-0 text-white hover:bg-white/10"
+                                >
+                                    <div className="w-6 h-6 flex flex-col justify-center items-center">
+                                        <div className="w-6 h-0.5 bg-white mb-1"></div>
+                                        <div className="w-6 h-0.5 bg-white mb-1"></div>
+                                        <div className="w-6 h-0.5 bg-white"></div>
+                                    </div>
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
